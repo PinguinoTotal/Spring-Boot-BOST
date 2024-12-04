@@ -2,7 +2,7 @@
 
 pondre todo lo que se necesita saber o lo que se de spring boot, el plan es:
 
-[] saber como poner una base de datos dentro de Sping Boot (embebida) *Curso de Spring completo de Spring Academy
+[] (jdbc-boot) saber como poner una base de datos dentro de Sping Boot (embebida) *Curso de Spring completo de Spring Academy
 
 [] saber spring Security *hacer todo el curso de spring security de todocode
 
