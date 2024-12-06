@@ -1,5 +1,8 @@
 package com.todocodeacademy.springsecurity.security.config;
 
+import com.todocodeacademy.springsecurity.security.config.filter.JwtTokenValidator;
+import com.todocodeacademy.springsecurity.utils.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,6 +22,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,9 @@ import java.util.List;
 //permite la seguidad por metodo
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     //security hace que intercepte todas las peticiones http, tanto las que entran como las que pueden llear a salir
     //y aplica logica de seguridad
@@ -45,6 +52,8 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 //hacemos que las sessiones sean satateless
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                //este ya es un filtro JWT personalizado en JwtTokenVlidator con herramientas en JwtUtils
+                .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 //establece que se va a autorizar y no del programa
                 .build();
 
@@ -173,6 +182,9 @@ public class SecurityConfig {
     }
 
      */
+
+    //para poder hacer uso de JWT es necesario poner la dependencia, esta esta en la pagina de jwt.io, libraries y
+    //de ahi se tiene que ir al repo para que se pueda añadir la dependecia
 }
 
 
